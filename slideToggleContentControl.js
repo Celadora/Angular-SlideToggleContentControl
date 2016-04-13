@@ -25,16 +25,16 @@ angular.module('slideToggleContentControl', [])
 .directive('slideToggleControl', function($timeout) {
     return {
         restrict: 'A',
-		scope: {'toggled': '=?'},
+        scope: {'toggled': '=?'},
         link: function(scope, element, attrs) {
             var target, content;
-			// scoped boolean variable for when the slide is toggled
+            // scoped boolean variable for when the slide is toggled
             scope.toggled = scope.toggled || false;
             
-			// slides the slide based on the value of toggle
-			function slide(toggled)
-			{
-				if (!target) target = document.querySelector(attrs.slideToggleControl);
+            // slides the slide based on the value of toggle
+            function slide(toggled)
+            {
+                if (!target) target = document.querySelector(attrs.slideToggleControl);
                 if (!content) content = target.querySelector('.slideable_content');
                 
                 if(toggled) {
@@ -44,29 +44,29 @@ angular.module('slideToggleContentControl', [])
                 } else {
                     target.style.height = '0px';
                 }
-			}
-			
-			// toggles the slide
-			function toggle()
-			{
-				// toggle boolean first
-				scope.toggled = !scope.toggled;
-				
-				// call the slide method
-				slide(scope.toggled);
-			}
-			
-			// handle when the control is clicked
-            element.bind('click', function() {
+            }
+            
+            // toggles the slide
+            function toggle()
+            {
+                // toggle boolean first
+                scope.toggled = !scope.toggled;
+                
+                // call the slide method
+                slide(scope.toggled);
+            }
+            
+            // handle when the control is clicked
+            element.bind('click keypress', function() {
                 toggle();
             });
-			
-			// initialize the slide after the directive has compiled
-			$timeout(function(){
-				// slide content in or out based on scope.toggled
-				slide(scope.toggled)
-			}, 1);
-			
+            
+            // initialize the slide after the directive has compiled
+            $timeout(function(){
+                // slide content in or out based on scope.toggled
+                slide(scope.toggled)
+            }, 1);
+            
         }
     }
 });
